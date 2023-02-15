@@ -2,11 +2,11 @@
 
 @section('container')
 <section id="barang">
-    <div class="container w-100 py-5 my-5 d-flex text-center justify-content-center">
+    <div class="container py-5 my-5 d-flex text-center justify-content-center">
         @foreach ($data as $data)
         <a href="/products/{{ $data->slug }}">
             <div class="card mt-5 mx-4" style="width: 18rem">
-                <img src="{{ asset('storage/images/products/'.$data->image) }}" class="card-img-top rounded-2"
+                <img src="{{ asset('storage/'.$data->image) }}" class="card-img-top rounded-2"
                     alt=" {{ $data->image }} " />
                 <div class="card-body">
                     <h5 class="card-title fw-bolder text-dark"> {{ $data->name }}</h5>

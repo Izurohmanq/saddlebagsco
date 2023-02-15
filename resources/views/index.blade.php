@@ -38,8 +38,8 @@
             </div>
         </div>
     </nav>
-
     @yield('container')
+
 
     <!-- modal  + footer -->
     <div class="modal fade" id="Feedback" tabindex="-1" aria-labelledby="Feedback" aria-hidden="true">
@@ -62,7 +62,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
-                            <textarea name="message" class="form-control" id="message" cols="30" rows="10"></textarea>
+                            <textarea maxlength="200" minlength="5" required name="message" class="form-control"
+                                id="message" cols="30" rows="10"></textarea>
 
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>

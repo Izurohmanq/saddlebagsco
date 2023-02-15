@@ -10,9 +10,11 @@
             @csrf
             @method("put")
             <div class="gambarTas">
+                <input type="hidden" name="oldImage" value="{{ $data->image }}">
                 <label for="image" class="form-label">Gambar</label>
+                <img class="img-preview img-fluid mb-3 col-md-5">
                 <input type="file" accept="image/" class="form-control" id="image" name="image"
-                    value="{{ $data->image }}" />
+                    onchange="previewImage()" />
                 <span> foto sekarang: {{ old('image',$data->image) }} </span>
             </div>
             <div class="mb-3">
@@ -55,5 +57,20 @@ name.addEventListener('change', function() {
         .then(response => response.json())
         .then(data => slug.value = data.slug)
 });
+
+// for preview image
+function previewImage() {
+    const image = document.querySelector("#image");
+    const imgPreview = document.querySelector('.img-preview');
+
+    imgPreview.style.display = 'block';
+
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(image.files[0]);
+
+    oFReader.onload = function(oFREvent) {
+        imgPreview.src = oFREvent.target.result;
+    }
+}
 </script>
 @endsection

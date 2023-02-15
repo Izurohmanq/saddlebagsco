@@ -55,7 +55,7 @@ class PageController extends Controller
                 'message'=> $request->message,
             ]
             );
-            return redirect('/')->with('status', 'Data terima kasih atas feedbacknya');
+            return redirect('/')->with('status', 'Terima Kasih atas feedbacknya');
     }
 
 

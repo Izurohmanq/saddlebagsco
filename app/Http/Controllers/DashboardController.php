@@ -6,6 +6,7 @@ use App\Models\Feedback;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardController extends Controller
@@ -44,7 +45,7 @@ class DashboardController extends Controller
     }
 
     public function feedbackPage(){
-        $data = Feedback::orderByDesc('id')->get();
+        $data = Feedback::latest()->paginate(7)->withQueryString();
         return view ('admin.feedback', [
             'title' => 'feedback',
             'data' => $data
@@ -79,9 +80,9 @@ class DashboardController extends Controller
     {
         
         if($request->file('image')){
-            $image = explode('.', $request->file('image')->getClientOriginalName())[0];
-            $image = $image . '-' . time() . '.' . $request->file('image')->extension();
-            $request->file('image')->storeAs('public/images/products/', $image);
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
             Product::where('id', $products->id)->update(
                 [   
                     'name'=> $request->name,
@@ -89,7 +90,7 @@ class DashboardController extends Controller
                     'bahan_tas'=> $request->bahan_tas,
                     'description'=> $request->description,
                     'qty'=> $request->qty,
-                    'image'=> $image,
+                    'image'=> $request->file('image')->store('public/Products'),
                     'price'=> $request->price
                 ]
                 );
@@ -126,10 +127,6 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // image
-        $image = explode('.', $request->file('image')->getClientOriginalName())[0];
-        $image = $image . '-' . time() . '.' . $request->file('image')->extension();
-        $request->file('image')->storeAs('public/images/products/', $image);
 
         Product::create(
             [   
@@ -138,7 +135,7 @@ class DashboardController extends Controller
                 'bahan_tas'=> $request->bahan_tas,
                 'description'=> $request->description,
                 'qty'=> $request->qty,
-                'image'=> $image,
+                'image'=> $request->file('image')->store('public/Products'),
                 'price'=> $request->price
             ]
             );
@@ -155,8 +152,24 @@ class DashboardController extends Controller
      */
     public function destroy(Product $product)
     {
+        if($product->image) {
+            Storage::delete($product->image);
+        }
+
         Product::where('id', $product->id)->delete();
 
         return redirect('/dashboardadminganteng/products')->with('status', 'Data berhasi dihapus');
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Feedback  $Feedback
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyFeedback(Feedback $feedback)
+    {
+        Feedback::where('id', $feedback->id)->delete();
+
+        return redirect('/dashboardadminganteng/feedback')->with('status', 'Data berhasi dihapus');
     }
 }

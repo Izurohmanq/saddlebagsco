@@ -33,6 +33,7 @@ Route::get('/products/{products:slug}', [PageController::class, 'detailsPage']);
 Route::get('/dashboardadminganteng', [DashboardController::class, 'index']);
 Route::get('/dashboardadminganteng/add-product', [DashboardController::class, 'addProduct']);
 Route::get('/dashboardadminganteng/feedback', [DashboardController::class, 'feedbackPage']);
+Route::delete('/dashboardadminganteng/feedback/{feedback}', [DashboardController::class, 'destroyFeedback']);
 Route::post('/dashboardadminganteng/add-product', [DashboardController::class, 'store']);
 Route::get('/dashboardadminganteng/add-product/createSlug', [DashboardController::class, 'createSlug']);
 Route::delete('/dashboardadminganteng/products/{product}', [DashboardController::class, 'destroy']);

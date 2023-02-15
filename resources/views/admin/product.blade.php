@@ -20,11 +20,10 @@
     </div>
     @endif
 
-    <div class="container w-100 py-5 d-flex text-center">
+    <div class="container w-100 py-5 d-flex text-center align-items-center">
         @foreach ($data as $data)
         <div class="card mt-5 mx-3" style="width: 18rem">
-            <img src="{{ asset('storage/images/products/'.$data->image) }}" class="card-img-top rounded-2"
-                alt=" {{ $data->image }} " />
+            <img src="{{ asset('storage/'.$data->image) }}" class="card-img-top rounded-2" alt=" {{ $data->image }} " />
             <div class="card-body">
                 <h5 class="card-title fw-bolder text-dark"> {{ $data->name }}</h5>
                 <p class="card-text text-dark"> {{ $data->bahan_tas }}</p>

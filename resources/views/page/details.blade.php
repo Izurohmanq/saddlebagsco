@@ -4,7 +4,7 @@
 <section id="openProduct">
     <div class="open d-flex justify-content-center align-items-center">
         <div class="fotoProduct">
-            <img src="{{ asset('storage/images/products/'.$data->image) }}" alt="{{ $data->name }}"
+            <img src="{{ asset('storage/'.$data->image) }}" alt="{{ $data->name }}"
                 class="jumbo mb-3 justify-content-center" />
         </div>
         <div class="contentProduct ms-3">
